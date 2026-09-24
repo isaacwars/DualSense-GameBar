@@ -1,30 +1,30 @@
 # DualSense GameBar Listener 🎮
 
-Una aplicación nativa de Windows (Bandeja del Sistema) escrita en C# que permite abrir la **Xbox Game Bar** directamente utilizando el **Botón PlayStation** de un control DualSense (PS5) o DualSense Edge.
+A native Windows (System Tray) application written in C# that allows you to instantly open the **Xbox Game Bar** using the **PlayStation Button** on a DualSense (PS5) or DualSense Edge controller.
 
-A diferencia de scripts de AutoHotkey o emuladores pesados (como DS4Windows o Steam), este programa es extremadamente ligero, consume ~0% de CPU y se comunica directamente con la API COM de Windows para invocar la Game Bar sin simular atajos de teclado.
+Unlike heavy emulators (like DS4Windows or Steam Input) or AutoHotkey scripts, this program is incredibly lightweight, consumes ~0% CPU, and communicates directly with the Windows COM API to summon the Game Bar without simulating keyboard shortcuts.
 
-## Características ✨
-* **100% Segundo Plano:** Sin ventanas molestas. Vive en la bandeja del sistema (System Tray).
-* **Soporte USB y Bluetooth:** Funciona sin importar cómo conectes tu control gracias a la integración nativa con DirectInput.
-* **Extremadamente Ligero:** Escrito en WinForms puro. El hilo descansa por 2 segundos si no hay controles, y chequea eficientemente a 33Hz cuando hay uno conectado.
-* **Sin Atajos de Teclado:** Utiliza `ApplicationActivationManager` (COM) para abrir la aplicación UWP de Xbox Game Bar de forma directa, esquivando el bloqueo de Windows (Foreground Lock) inyectando la tecla fantasma F24.
-* **Conectar y Jugar:** Soporta desconexiones y reconexiones en tiempo real. Reconoce instantáneamente tu control sin necesidad de reiniciar la app.
+## Features ✨
+* **100% Background Execution:** No annoying windows. It lives quietly in your System Tray.
+* **USB & Bluetooth Support:** Works flawlessly regardless of how you connect your controller thanks to native DirectInput integration.
+* **Extremely Lightweight:** Written in pure WinForms. The monitoring thread sleeps for 2 seconds when no controller is detected, and polls efficiently at 33Hz when a controller is active.
+* **No Keyboard Macros:** Uses `ApplicationActivationManager` (COM) to launch the UWP Xbox Game Bar application directly, bypassing the Windows Foreground Lock by injecting a phantom F24 keystroke.
+* **Plug and Play:** Supports real-time disconnections and reconnections. It instantly recognizes your controller without needing to restart the app.
 
-## ¿Cómo instalar? 📦
-Si solo quieres usar la aplicación, descarga el instalador desde la pestaña de **Releases** de este repositorio e instálalo como cualquier otro programa de Windows.
+## How to Install 📦
+If you just want to use the application, download the installer from the **Releases** tab of this repository and install it like any other standard Windows program.
 
-## ¿Cómo compilar desde el código fuente? 🛠️
-No necesitas instalar Visual Studio. Tu PC con Windows ya tiene el compilador necesario.
+## How to Compile from Source 🛠️
+You don't need to install Visual Studio. Your Windows PC already has the necessary compiler built-in.
 
-1. Clona o descarga este repositorio.
-2. Reemplaza `icon.ico` con el icono que prefieras (opcional).
-3. Dale doble clic al archivo `compilar.bat`.
-4. ¡Listo! Se generará un nuevo `DualSenseGameBar.exe`.
+1. Clone or download this repository.
+2. Replace `icon.ico` with your preferred icon (optional).
+3. Double-click the `compilar.bat` file.
+4. Done! A new `DualSenseGameBar.exe` will be generated.
 
-Para generar el instalador formal `.exe`, necesitas instalar **Inno Setup 7** y compilar el archivo `setup.iss`.
+To generate the formal `.exe` installer, you need to install **Inno Setup 7** and compile the `setup.iss` script.
 
-## Detalles Técnicos (Auditoría) 🔬
-* El botón de PS es reconocido en los identificadores de bits `4096` y `8192` (Botones 13 y 14 de DirectInput).
-* Se ejecuta un hilo secundario MTA/STA al invocar COM para prevenir cuelgues si la Game Bar se congela.
-* Emplea un `Mutex` global para evitar que abras la aplicación múltiples veces por error.
+## Technical Details (Auditing) 🔬
+* The PS button is recognized via bitmasks `4096` and `8192` (Buttons 13 and 14 in DirectInput).
+* A secondary STA thread is executed when invoking the COM API to prevent the main loop from hanging if the Game Bar freezes.
+* It uses a global `Mutex` to prevent multiple instances of the application from running simultaneously.
