@@ -22,7 +22,6 @@ You don't need to install Visual Studio. Your Windows PC already has the necessa
 3. Double-click the `compilar.bat` file.
 4. Done! A new `DualSenseGameBar.exe` will be generated.
 
-To generate the formal `.exe` installer, you need to install **Inno Setup 7** and compile the `setup.iss` script.
 
 ## Technical Details (Auditing) 🔬
 * The PS button is recognized via bitmasks `4096` and `8192` (Buttons 13 and 14 in DirectInput).
